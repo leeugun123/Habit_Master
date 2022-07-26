@@ -2,17 +2,21 @@ package org.techtown.habit_master.Share
 
 
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import org.techtown.habit_master.databinding.ActivityUploadBinding
@@ -23,6 +27,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class UploadActivity : AppCompatActivity() {
+
+    var firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
+    //파이어베이스 storage 저장
+
 
     private lateinit var mBinding : ActivityUploadBinding
 
@@ -40,7 +48,11 @@ class UploadActivity : AppCompatActivity() {
 
         mBinding.takePicture.setOnClickListener{
 
-            takeCapture()// 기본 카메라 앱을 실행하여 사진 촬영.
+            takeCapture()// 기본 카메라 앱을 실행하여 사진 촬영
+
+
+
+
 
         }
 
@@ -73,8 +85,14 @@ class UploadActivity : AppCompatActivity() {
 
     private fun createImageFile(): File {
 
-        val timestamp : String = SimpleDateFormat("yyyyMMdd_HH").format(Date())
+        val timestamp : String = SimpleDateFormat("yyyyMMddhhmmss").format(Date())
         //시간마다 파일을 다르게함
+
+        Log.e(TAG,timestamp)
+        var imgRef = firebaseStorage.getReference("uploads/"+timestamp+".png")
+
+       // imgRef.putFile("")
+
 
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         //?은 nullable 이 변수를 null을 허락해줌
@@ -122,6 +140,7 @@ class UploadActivity : AppCompatActivity() {
             if(Build.VERSION.SDK_INT < 28){
                 bitmap = MediaStore.Images.Media.getBitmap(contentResolver,Uri.fromFile(file))
                 mBinding.uploadImg.setImageBitmap(bitmap)
+
             }//안드로이드 9.0 버전보다 낮을 경우
             else{
 
@@ -132,6 +151,7 @@ class UploadActivity : AppCompatActivity() {
 
                 bitmap = ImageDecoder.decodeBitmap(decode)
                 mBinding.uploadImg.setImageBitmap(bitmap)
+
             }//더 높을 경우
 
             //안드로이드 버전에 따라 다르게 처리함
