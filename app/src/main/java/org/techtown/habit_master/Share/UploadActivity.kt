@@ -15,6 +15,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.gun0912.tedpermission.PermissionListener
@@ -29,13 +30,15 @@ import java.util.*
 class UploadActivity : AppCompatActivity() {
 
     var firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
+    var storageRef : StorageReference = firebaseStorage.getReference()
     //파이어베이스 storage 저장
-
 
     private lateinit var mBinding : ActivityUploadBinding
 
     val REQUEST_IMAGE_CAPTURE = 1 // 카메라 사진 촬영 요청 코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값
+
+    private lateinit var ImgUri : Uri
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +52,9 @@ class UploadActivity : AppCompatActivity() {
         mBinding.takePicture.setOnClickListener{
 
             takeCapture()// 기본 카메라 앱을 실행하여 사진 촬영
-
-
-
-
-
         }
+
+
 
     }
 
@@ -75,6 +75,9 @@ class UploadActivity : AppCompatActivity() {
                         "org.techtown.habit_master.fileprovider",
                         it
                     )
+
+                    //ImgUri = photoURI
+
                     takePictrueIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoURI)
                     startActivityForResult(takePictrueIntent,REQUEST_IMAGE_CAPTURE)
 
@@ -88,17 +91,18 @@ class UploadActivity : AppCompatActivity() {
         val timestamp : String = SimpleDateFormat("yyyyMMddhhmmss").format(Date())
         //시간마다 파일을 다르게함
 
-        Log.e(TAG,timestamp)
-        var imgRef = firebaseStorage.getReference("uploads/"+timestamp+".png")
-
-       // imgRef.putFile("")
+       // val riverRef = storageRef.child("habit_img/"+timestamp+".jpg")
+      //  riverRef.putFile(ImgUri)
+        //파이어 베이스에 이미지 업로드
 
 
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         //?은 nullable 이 변수를 null을 허락해줌
         return File.createTempFile("JPEG_${timestamp}_",".jpg",storageDir)
             .apply { curPhotoPath  = absolutePath}
-                //절대경로로 설정
+        //절대경로로 설정
+
+
 
 
     }//이미지 파일 생성
@@ -119,6 +123,7 @@ class UploadActivity : AppCompatActivity() {
 
         }
 
+        //Ted permission을 이용하여 카메라 권한 허용
         TedPermission.create()
             .setPermissionListener(permission)
             .setRationaleMessage("카메라 앱을 사용하시려면 권한을 허용해주세요")
@@ -160,7 +165,6 @@ class UploadActivity : AppCompatActivity() {
         }//이미지를 성공적으로 가져왔다면
 
 
-
     }
 
     //갤러리에 저장
@@ -169,7 +173,7 @@ class UploadActivity : AppCompatActivity() {
         val folderPath = Environment.getExternalStorageDirectory().absolutePath + "/Pictures/"
         //사진 폴더로 저장하기 위한 경로 설정
 
-        val timestamp : String = SimpleDateFormat("yyyyMMdd_HH").format(Date())
+        val timestamp : String = SimpleDateFormat("yyyyMMddhhmmss").format(Date())
 
         val fileName = "${timestamp}.jpeg"
 
