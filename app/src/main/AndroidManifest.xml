@@ -6,8 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name=".GlobalApplication"
@@ -19,20 +22,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habit_Master"
         tools:ignore="MissingClass">
-
+        <activity
+            android:name=".Share.UploadActivity"
+            android:exported="false" />
         <activity
             android:name=".BottomActivity"
             android:exported="false" />
-
-
-        <activity android:name=".CheckFragment.HabitActivity"
-            android:exported="false"
-            />
-
-        <activity android:name=".Share.ShareActivity"
-            android:exported="false"
-            />
-
+        <activity
+            android:name=".CheckFragment.HabitActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Share.ShareActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -42,7 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
@@ -57,8 +57,6 @@
                     android:scheme="kakaof4cebb67d6aee386bad44eaa3a422cc4" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

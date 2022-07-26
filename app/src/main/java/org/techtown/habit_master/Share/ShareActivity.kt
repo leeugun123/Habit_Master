@@ -80,13 +80,11 @@ class ShareActivity : AppCompatActivity() {
 
         mBinding.uploadButton.setOnClickListener{
 
-
-            /*
             val intent = Intent(this, UploadActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             //finish() 지금 액티비티 그대로 유지하기
-            */
+
 
         }//이미지 저장하기
 
