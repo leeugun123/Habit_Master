@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/checkFragment"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="내 습관"
+        android:icon="@drawable/ic_baseline_format_list_bulleted_24"/>
+
+    <item android:id="@+id/routineFragment"
+        app:showAsAction="ifRoom"
+        android:title="루틴 모음"
+        android:icon="@drawable/dashboard"
+        />
+
+    <item android:id="@+id/centerFragment"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="내 업적"
+        android:icon="@drawable/achieve"
+        />
+
+    <item android:id="@+id/socialFragment"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="소셜"
+        android:icon="@drawable/people"
+        />
+
+    <item android:id="@+id/settingFragment"
+        app:showAsAction="ifRoom"
+        android:enabled="true"
+        android:title="내 정보"
+        android:icon="@drawable/person"
+        />
+
+</menu>

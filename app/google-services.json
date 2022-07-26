@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "264151249734",
+    "firebase_url": "https://habitcertify-default-rtdb.firebaseio.com",
+    "project_id": "habitcertify",
+    "storage_bucket": "habitcertify.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264151249734:android:b116dffdf84987d10f6b47",
+        "android_client_info": {
+          "package_name": "org.techtown.habit_certify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264151249734-kpemd65fjus43e9q47jtegfqf4r96oo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHwLSVz40jpEe-3ihvp52G0XCJbO7OwEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264151249734-kpemd65fjus43e9q47jtegfqf4r96oo0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264151249734:android:88d7850c25d1e8f80f6b47",
+        "android_client_info": {
+          "package_name": "org.techtown.habit_certify.fragments.ChatFragment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264151249734-kpemd65fjus43e9q47jtegfqf4r96oo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHwLSVz40jpEe-3ihvp52G0XCJbO7OwEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264151249734-kpemd65fjus43e9q47jtegfqf4r96oo0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264151249734:android:c9746ee3901d80f10f6b47",
+        "android_client_info": {
+          "package_name": "org.techtown.habit_master"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264151249734-kpemd65fjus43e9q47jtegfqf4r96oo0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHwLSVz40jpEe-3ihvp52G0XCJbO7OwEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264151249734-kpemd65fjus43e9q47jtegfqf4r96oo0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

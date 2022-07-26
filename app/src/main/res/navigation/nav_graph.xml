@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/checkFragment">
+
+    <fragment
+        android:id="@+id/checkFragment"
+        android:label="fragment_check"
+        tools:layout="@layout/fragment_check"
+        android:name="org.techtown.habit_master.CheckFragment.CheckFragment"
+        />
+
+    <fragment
+        android:id="@+id/routineFragment"
+        android:label="fragment_routine"
+        tools:layout="@layout/fragment_routine"
+        android:name="org.techtown.habit_master.RoutineFragment.RoutineFragment"
+        />
+
+    <fragment
+        android:id="@+id/centerFragment"
+        android:label="fragment_center"
+        tools:layout="@layout/fragment_center"
+        android:name="org.techtown.habit_master.CenterFragment.CenterFragment"
+        />
+
+    <fragment
+        android:id="@+id/socialFragment"
+        android:label="fragment_human"
+        tools:layout="@layout/fragment_social"
+        android:name="org.techtown.habit_master.SocialFragment.SocialFragment"
+        />
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:label="fragment_setting"
+        android:name="org.techtown.habit_master.SettingFragment.SettingFragment"
+        tools:layout="@layout/fragment_setting" />
+
+
+</navigation>
