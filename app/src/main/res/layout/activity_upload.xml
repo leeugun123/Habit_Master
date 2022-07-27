@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/flower_ex" />
+        />
 
     <Button
         android:id="@+id/take_picture"
@@ -23,5 +23,14 @@
         android:text="사진 찍기"
         android:drawableLeft="@drawable/carmera_pic"
         />
+
+    <Button
+        android:id="@+id/upload_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/take_picture"
+        android:layout_marginLeft="20dp"
+        android:text="업로드" />
 
 </RelativeLayout>

@@ -16,8 +16,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.android.gms.auth.api.signin.internal.Storage
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import org.techtown.habit_master.databinding.ActivityUploadBinding
@@ -38,8 +40,8 @@ class UploadActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1 // 카메라 사진 촬영 요청 코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값
 
-    private lateinit var ImgUri : Uri
-
+    private var filePath : Uri? = null
+    //파일 Path
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -51,10 +53,43 @@ class UploadActivity : AppCompatActivity() {
 
         mBinding.takePicture.setOnClickListener{
 
-            takeCapture()// 기본 카메라 앱을 실행하여 사진 촬영
+            takeCapture()
+            // 기본 카메라 앱을 실행하여 사진 촬영
         }
 
+        mBinding.uploadButton.setOnClickListener{
 
+            uploadFile()
+
+        }//이미지 업로드
+
+
+
+
+    }
+
+    private fun uploadFile() {
+
+        if(filePath != null){
+
+            val storage : FirebaseStorage = FirebaseStorage.getInstance()
+
+            val formatter = SimpleDateFormat("yyyyMMHH_mmss")
+            val now = Date()
+            val filename : String = formatter.format(now) + ".png"
+            //파일 이름 만들기
+
+            val storageRef : StorageReference = storage.getReferenceFromUrl("gs://habitcertify.appspot.com")
+                .child("images/" + filename)
+            //storage에 업로드 파일 만들어 넣기
+
+
+            storageRef.putFile(filePath!!)
+            //파이어베이스에 업로드
+
+
+
+        }
 
     }
 
@@ -76,7 +111,6 @@ class UploadActivity : AppCompatActivity() {
                         it
                     )
 
-                    //ImgUri = photoURI
 
                     takePictrueIntent.putExtra(MediaStore.EXTRA_OUTPUT,photoURI)
                     startActivityForResult(takePictrueIntent,REQUEST_IMAGE_CAPTURE)
@@ -86,14 +120,12 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
+    //사진을 찍기 전에 미리 호출된다.
     private fun createImageFile(): File {
 
         val timestamp : String = SimpleDateFormat("yyyyMMddhhmmss").format(Date())
         //시간마다 파일을 다르게함
 
-       // val riverRef = storageRef.child("habit_img/"+timestamp+".jpg")
-      //  riverRef.putFile(ImgUri)
-        //파이어 베이스에 이미지 업로드
 
 
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -139,12 +171,19 @@ class UploadActivity : AppCompatActivity() {
 
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK){
 
+            //Log.e("TAG",curPhotoPath)
+
             val bitmap : Bitmap
             val file = File(curPhotoPath)
 
+            filePath = Uri.fromFile(file)
+            //filePath 경로 설정
+
             if(Build.VERSION.SDK_INT < 28){
+
                 bitmap = MediaStore.Images.Media.getBitmap(contentResolver,Uri.fromFile(file))
                 mBinding.uploadImg.setImageBitmap(bitmap)
+
 
             }//안드로이드 9.0 버전보다 낮을 경우
             else{
