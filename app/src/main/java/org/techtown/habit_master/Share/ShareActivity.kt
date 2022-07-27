@@ -61,6 +61,7 @@ class ShareActivity : AppCompatActivity() {
                     shareList.add(Share(ds.child("pic").value.toString()))
                     //파베로부터 데이터 가져오기
 
+
                 }
 
                 recyclerView = mBinding.shareRecyclerView
@@ -81,6 +82,8 @@ class ShareActivity : AppCompatActivity() {
         mBinding.uploadButton.setOnClickListener{
 
             val intent = Intent(this, UploadActivity::class.java)
+            intent.putExtra("habitTitle",shareTitle.toString())
+            intent.putExtra("habitDate",date)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             //finish() 지금 액티비티 그대로 유지하기

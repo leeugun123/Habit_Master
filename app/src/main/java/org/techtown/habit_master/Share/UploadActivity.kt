@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -17,11 +18,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.kakao.sdk.user.UserApiClient
+import org.techtown.habit_master.MainActivity
 import org.techtown.habit_master.databinding.ActivityUploadBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -31,10 +35,6 @@ import java.util.*
 
 class UploadActivity : AppCompatActivity() {
 
-    var firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
-    var storageRef : StorageReference = firebaseStorage.getReference()
-    //파이어베이스 storage 저장
-
     private lateinit var mBinding : ActivityUploadBinding
 
     val REQUEST_IMAGE_CAPTURE = 1 // 카메라 사진 촬영 요청 코드
@@ -43,12 +43,21 @@ class UploadActivity : AppCompatActivity() {
     private var filePath : Uri? = null
     //파일 Path
 
+    var uid : String? = null
+    //카카오 uid
+
+    var habitTitle : String? = null
+    var habitDate : String? = null
+    //이전 intent에서 Title 가져오기
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         mBinding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
+        habitTitle = intent.getStringExtra("habitTitle") //습관 제목
+        habitDate = intent.getStringExtra("habitDate") // 오늘 날짜 가져오기
         setPermission()//권한 허용
 
         mBinding.takePicture.setOnClickListener{
@@ -60,10 +69,12 @@ class UploadActivity : AppCompatActivity() {
         mBinding.uploadButton.setOnClickListener{
 
             uploadFile()
+            //이미지 업로드
+            Toast.makeText(this@UploadActivity,"이미지가 업로드 되었습니다",Toast.LENGTH_SHORT).show()
+
+
 
         }//이미지 업로드
-
-
 
 
     }
@@ -79,17 +90,63 @@ class UploadActivity : AppCompatActivity() {
             val filename : String = formatter.format(now) + ".png"
             //파일 이름 만들기
 
-            val storageRef : StorageReference = storage.getReferenceFromUrl("gs://habitcertify.appspot.com")
+            var storageRef : StorageReference = storage.getReferenceFromUrl("gs://habitcertify.appspot.com")
                 .child("images/" + filename)
             //storage에 업로드 파일 만들어 넣기
-
 
             storageRef.putFile(filePath!!)
             //파이어베이스에 업로드
 
+            //파일 업로드까지 시간이 좀 걸림, 따라서 handler를 이용하여 늦게 처리해줌
+            Handler().postDelayed({
+                bringUri(filename)
+            },3000)
+
 
 
         }
+
+    }
+
+    private fun bringUri(filename : String) {
+
+        val storage : FirebaseStorage = FirebaseStorage.getInstance()
+
+        var writeDatabase = FirebaseDatabase.getInstance()
+        var databaseReference = writeDatabase.getReference()
+        //데이터 쓰기
+
+
+        UserApiClient.instance.me { user, error ->
+
+            if (error != null) {
+                //Log.e(TAG, "사용자 정보 요청 실패", error)
+            } else if (user != null) {
+
+                uid = user.id.toString()
+            }
+
+            //storage -> Realtime Database로 옮기기
+            val storageRef = storage.getReferenceFromUrl("gs://habitcertify.appspot.com")
+            storageRef.child("images/" + filename).downloadUrl.addOnSuccessListener {
+
+                //제목은 이전 액티비티에서 intent로 가져온다.
+                databaseReference.child("Habits").child(habitTitle.toString()).child("date")
+                    .child(habitDate.toString()).child(uid.toString()).child("pic")
+                    .setValue(it.toString())
+
+                Log.e(TAG,"성공하였습니다.")
+
+            }//성공시
+                .addOnFailureListener{
+
+                    Log.e(TAG,"실패하였습니다.")
+
+                }
+
+        }
+
+
 
     }
 

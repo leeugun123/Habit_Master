@@ -33,9 +33,6 @@ class RoutineFragment : Fragment(){
     lateinit var uid :String
     //카카오 uid
 
-    //데이터 쓰기
-    var writeDatabase = FirebaseDatabase.getInstance()
-    var databaseReference = writeDatabase.getReference()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
