@@ -56,12 +56,8 @@ class ShareActivity : AppCompatActivity() {
 
                 for(ds in snapshot.children){
 
-                    Log.e(TAG,ds.child("pic").value.toString())
-
-                    shareList.add(Share(ds.child("pic").value.toString()))
+                    shareList.add(Share(ds.child("shareImg").getValue().toString(),ds.child("description").getValue().toString()))
                     //파베로부터 데이터 가져오기
-
-
                 }
 
                 recyclerView = mBinding.shareRecyclerView

@@ -72,7 +72,8 @@ class UploadActivity : AppCompatActivity() {
             //이미지 업로드
             Toast.makeText(this@UploadActivity,"이미지가 업로드 되었습니다",Toast.LENGTH_SHORT).show()
 
-
+            finish()
+            //액티비티 꺼짐
 
         }//이미지 업로드
 
@@ -100,7 +101,7 @@ class UploadActivity : AppCompatActivity() {
             //파일 업로드까지 시간이 좀 걸림, 따라서 handler를 이용하여 늦게 처리해줌
             Handler().postDelayed({
                 bringUri(filename)
-            },5000)
+            },3000)
 
 
 
@@ -130,10 +131,14 @@ class UploadActivity : AppCompatActivity() {
             val storageRef = storage.getReferenceFromUrl("gs://habitcertify.appspot.com")
             storageRef.child("images/" + filename).downloadUrl.addOnSuccessListener {
 
+                var share = Share(it.toString(),mBinding.description.text.toString())
+
+                //Share 클래스 자체로 서버로 업로드한다.
+
                 //제목은 이전 액티비티에서 intent로 가져온다.
                 databaseReference.child("Habits").child(habitTitle.toString()).child("date")
-                    .child(habitDate.toString()).child(uid.toString()).child("pic")
-                    .setValue(it.toString())
+                    .child(habitDate.toString()).child(uid.toString())
+                    .setValue(share)
 
                 Log.e(TAG,"성공하였습니다.")
 

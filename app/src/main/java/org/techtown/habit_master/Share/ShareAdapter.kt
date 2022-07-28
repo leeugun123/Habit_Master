@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.kakao.sdk.user.UserApiClient
 import org.techtown.habit_master.databinding.ShareHabitBinding
 
 class ShareAdapter(private val items: ArrayList<Share>, val context : Context): RecyclerView.Adapter<ShareAdapter.ViewHolder>()
@@ -35,11 +36,28 @@ class ShareAdapter(private val items: ArrayList<Share>, val context : Context): 
 
         fun bind(item: Share) {
 
+            UserApiClient.instance.me { user, error ->
+
+                if (error != null) {
+                    //Log.e(TAG, "사용자 정보 요청 실패", error)
+                } else if (user != null) {
+
+                    var uid = user.id.toString()
+                    binding.nickName.text = uid
+                    //닉네임 설정
+                    //일단 카카오 uid로 정함
+
+                }
+            }
+
             Glide.with(itemView.context)
                 .load(item.shareImg)
                 .override(400, 300)
                 .into(binding.habitPic)
             //사진 붙이기
+
+            binding.description.setText(item.description)
+            //부가 설명 추가
 
         }
 
