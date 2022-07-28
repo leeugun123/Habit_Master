@@ -100,7 +100,7 @@ class UploadActivity : AppCompatActivity() {
             //파일 업로드까지 시간이 좀 걸림, 따라서 handler를 이용하여 늦게 처리해줌
             Handler().postDelayed({
                 bringUri(filename)
-            },3000)
+            },5000)
 
 
 
