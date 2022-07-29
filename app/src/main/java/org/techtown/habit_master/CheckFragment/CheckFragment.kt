@@ -23,13 +23,11 @@ class CheckFragment : Fragment() {
 
     private var mBinding: FragmentCheckBinding? = null
 
-
     private val list : ArrayList<org.techtown.habit_master.RoutineFragment.Challenge> = ArrayList()
     lateinit var recyclerView: RecyclerView
     private val database = Firebase.database//파이어베이스 연동
     val myHabits = database.getReference("Habits")
     //Habit 데이터 가져오기
-
 
     lateinit var uid :String
     //카카오 uid

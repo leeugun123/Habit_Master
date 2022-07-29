@@ -29,13 +29,11 @@
             android:id="@+id/checkText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/textListTitle"
-            android:text="미인증"
-            android:textSize="20sp"
-            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/textListTitle"
             android:textColor="#E62719"
-            />
+            android:textSize="20sp" />
 
 
     </RelativeLayout>

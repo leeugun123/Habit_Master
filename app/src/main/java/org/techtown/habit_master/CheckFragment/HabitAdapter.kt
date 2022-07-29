@@ -3,6 +3,7 @@ package org.techtown.habit_master.CheckFragment
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -80,11 +81,27 @@ class HabitAdapter (private val items: ArrayList<org.techtown.habit_master.Routi
 
                     database.reference.child("Habits")
                         .child(item.habitTitle).child("date")
-                        .child(date).child(uid).addValueEventListener(object : ValueEventListener {
-
+                        .addValueEventListener(object : ValueEventListener {
+                            //일단 여기 문제가 X
                             override fun onDataChange(snapshot: DataSnapshot) {
 
-                               val share = snapshot.child("checked").getValue()
+                                var share : Boolean? = false
+
+                                if(snapshot.child(date).exists()){
+                                    //오늘 날짜가 있는지 체크
+                                    if(snapshot.child(date).child(uid).exists()){
+                                        share = true
+                                    }//uid가 존재하는 경우 check 된 것이므로 true 표시
+                                }
+
+                                if(share == true){
+                                    binding.checkText.setText("인증")
+                                    binding.checkText.setTextColor(Color.parseColor("#009900"))
+                                }
+                                else{
+                                    binding.checkText.setText("미인증")
+                                    binding.checkText.setTextColor(Color.parseColor("#ff0000"))
+                                }//빨간색
 
 
 
