@@ -101,8 +101,8 @@ class UploadActivity : AppCompatActivity() {
             //파일 업로드까지 시간이 좀 걸림, 따라서 handler를 이용하여 늦게 처리해줌
             Handler().postDelayed({
                 bringUri(filename)
-            },3000)
-
+            },6000)
+            //handler로 6초후 처리됨
 
 
         }
@@ -123,15 +123,16 @@ class UploadActivity : AppCompatActivity() {
             if (error != null) {
                 //Log.e(TAG, "사용자 정보 요청 실패", error)
             } else if (user != null) {
-
                 uid = user.id.toString()
             }
+
+
 
             //storage -> Realtime Database로 옮기기
             val storageRef = storage.getReferenceFromUrl("gs://habitcertify.appspot.com")
             storageRef.child("images/" + filename).downloadUrl.addOnSuccessListener {
 
-                var share = Share(it.toString(),mBinding.description.text.toString())
+                var share = Share(uid.toString(),it.toString(),mBinding.description.text.toString(),true)
 
                 //Share 클래스 자체로 서버로 업로드한다.
 

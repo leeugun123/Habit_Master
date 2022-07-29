@@ -36,19 +36,7 @@ class ShareAdapter(private val items: ArrayList<Share>, val context : Context): 
 
         fun bind(item: Share) {
 
-            UserApiClient.instance.me { user, error ->
-
-                if (error != null) {
-                    //Log.e(TAG, "사용자 정보 요청 실패", error)
-                } else if (user != null) {
-
-                    var uid = user.id.toString()
-                    binding.nickName.text = uid
-                    //닉네임 설정
-                    //일단 카카오 uid로 정함
-
-                }
-            }
+            binding.nickName.text = item.uid
 
             Glide.with(itemView.context)
                 .load(item.shareImg)
