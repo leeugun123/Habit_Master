@@ -71,6 +71,8 @@ dependencies {
     implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
     //일단 import는 된다.
 
+    //single calendarView library
+    implementation 'com.michalsvec:single-row-calednar:1.0.0'
 
 
 
