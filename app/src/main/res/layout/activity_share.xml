@@ -50,6 +50,15 @@
         android:gravity="center"
         />
 
+    <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        app:deselection="false"
+        app:longPress="false"
+        app:multiSelection="false"
+
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shareRecyclerView"

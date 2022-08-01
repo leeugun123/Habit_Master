@@ -41,6 +41,8 @@ class HabitAdapter (private val items: ArrayList<org.techtown.habit_master.Routi
             this.bind(item)
             itemView.tag = item
         }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
