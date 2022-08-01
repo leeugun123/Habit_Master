@@ -53,8 +53,8 @@
     <com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
         android:id="@+id/rowCalendar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#FFEB3B"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
         app:deselection="false"
         app:longPress="false"
         app:multiSelection="false"

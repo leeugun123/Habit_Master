@@ -1,12 +1,10 @@
 package org.techtown.habit_master.Share
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.format.DateUtils
-import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,19 +16,19 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.michalsvec.singlerowcalendar.calendar.CalendarChangesObserver
 import com.michalsvec.singlerowcalendar.calendar.CalendarViewManager
-import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
-import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendarAdapter
+import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendarAdapter.CalendarViewHolder
 import com.michalsvec.singlerowcalendar.selection.CalendarSelectionManager
-import com.michalsvec.singlerowcalendar.utils.DateUtils.getDates
+import com.michalsvec.singlerowcalendar.utils.DateUtils.getDay3LettersName
 import com.michalsvec.singlerowcalendar.utils.DateUtils.getDayNumber
-import kotlinx.android.synthetic.main.activity_share.*
-import kotlinx.android.synthetic.main.item.view.*
 import kotlinx.android.synthetic.main.item_calendar_day_selected.view.*
+import kotlinx.android.synthetic.main.item_calendar_day_unselected.view.*
 import org.techtown.habit_master.R
 import org.techtown.habit_master.databinding.ActivityShareBinding
 import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
+
+
 
 class ShareActivity : AppCompatActivity() {
 
@@ -58,7 +56,6 @@ class ShareActivity : AppCompatActivity() {
         mBinding.shareTitle.text = shareTitle.toString()
         //습관제목 붙이기
 
-
         val rowCalendarManager = object : CalendarViewManager {
 
             override fun setCalendarViewResourceId(position: Int, date: Date, isSelected: Boolean): Int {
@@ -66,23 +63,28 @@ class ShareActivity : AppCompatActivity() {
                 val cal = Calendar.getInstance()
                 cal.time = date
 
-                return if(isSelected)
+                return if(isSelected){
                     when (cal[Calendar.DAY_OF_WEEK]){
-                        else -> R.layout.item_calendar_day_selected
-                    }
-                else
-                    when(cal[Calendar.DAY_OF_WEEK]){
                         else -> R.layout.item_calendar_day_unselected
                     }
 
+                }
+
+                else{
+                    when(cal[Calendar.DAY_OF_WEEK]){
+                        else -> R.layout.item_calendar_day_unselected
+                    }
+                }
 
 
             }
 
-            override fun bindDataToCalendarView(holder: SingleRowCalendarAdapter.CalendarViewHolder, date: Date, position: Int, isSelected: Boolean) {
+            override fun bindDataToCalendarView(holder: CalendarViewHolder, date: Date, position: Int, isSelected: Boolean) {
 
-                //holder.itemView.tv_day.text = getDayNumber(date)
-                holder.itemView.tag = getDayNumber(date)
+                holder.itemView.unselected_date.text = getDayNumber(date)
+                holder.itemView.unselected_day.text = getDay3LettersName(date)
+
+
             }
 
         }
