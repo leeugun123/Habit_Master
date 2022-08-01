@@ -23,11 +23,6 @@ class SocialFragment : Fragment(){
         mBinding = binding
 
 
-        /*
-        val recyclerView = mBinding!!.ChatRecyclerview
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = RecyclerViewAdapter()
-        */
 
     }
 

@@ -137,7 +137,7 @@ class ShareActivity : AppCompatActivity() {
 
                 for(ds in snapshot.children){
 
-                    shareList.add(Share(ds.child("uid").value.toString(),
+                    shareList.add(Share(ds.child("nickName").value.toString(),
                         ds.child("shareImg").value.toString(),
                         ds.child("description").value.toString(),
                         true))

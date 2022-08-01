@@ -107,9 +107,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
     }
 
 
@@ -152,6 +149,7 @@ class MainActivity : AppCompatActivity() {
     private fun goBottomActivity() {
         var intent : Intent
         intent = Intent(this, BottomActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }
@@ -159,6 +157,7 @@ class MainActivity : AppCompatActivity() {
     private fun goMakeActivity() {
         var intent : Intent
         intent = Intent(this, NicknameActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
     }

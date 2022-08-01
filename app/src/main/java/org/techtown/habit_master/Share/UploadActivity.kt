@@ -18,7 +18,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.google.android.gms.auth.api.signin.internal.Storage
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -45,6 +50,9 @@ class UploadActivity : AppCompatActivity() {
 
     var uid : String? = null
     //카카오 uid
+
+    var nickName: String? = null
+    //닉네임
 
     var habitTitle : String? = null
     var habitDate : String? = null
@@ -117,6 +125,9 @@ class UploadActivity : AppCompatActivity() {
         var databaseReference = writeDatabase.getReference()
         //데이터 쓰기
 
+        val database = Firebase.database//파이어베이스 연동
+
+
 
         UserApiClient.instance.me { user, error ->
 
@@ -126,13 +137,32 @@ class UploadActivity : AppCompatActivity() {
                 uid = user.id.toString()
             }
 
+            var findName = database.getReference("Users").child(uid.toString())
+
+            var nickName : String? = null
+
+            //파이어베이스 nickname 가져와서 쓰기
+            findName.addValueEventListener(object : ValueEventListener{
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                   nickName = snapshot.child("nickName").getValue().toString()
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+
+            })
 
 
             //storage -> Realtime Database로 옮기기
             val storageRef = storage.getReferenceFromUrl("gs://habitcertify.appspot.com")
             storageRef.child("images/" + filename).downloadUrl.addOnSuccessListener {
 
-                var share = Share(uid.toString(),it.toString(),mBinding.description.text.toString(),true)
+                var share = Share(nickName.toString(),it.toString(),mBinding.description.text.toString(),true)
 
                 //Share 클래스 자체로 서버로 업로드한다.
 

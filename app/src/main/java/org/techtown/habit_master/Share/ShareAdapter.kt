@@ -36,7 +36,7 @@ class ShareAdapter(private val items: ArrayList<Share>, val context : Context): 
 
         fun bind(item: Share) {
 
-            binding.nickName.text = item.uid
+            binding.nickName.text = item.nickName
 
             Glide.with(itemView.context)
                 .load(item.shareImg)

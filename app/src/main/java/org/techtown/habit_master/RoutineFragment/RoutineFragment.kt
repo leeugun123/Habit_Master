@@ -33,8 +33,6 @@ class RoutineFragment : Fragment(){
     lateinit var uid :String
     //카카오 uid
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
