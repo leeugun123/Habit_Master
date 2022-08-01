@@ -8,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="#4CAF50"
         android:orientation="horizontal">
 
@@ -16,12 +17,11 @@
             android:id="@+id/shareTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:gravity="center"
             android:fontFamily="cursive"
+            android:gravity="center"
             android:text="운동"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -31,7 +31,8 @@
     <TextView
         android:id="@+id/date"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="오늘 날짜"
@@ -39,8 +40,9 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="다른 사용자들의 습관 인증"
+        android:layout_weight="0.7"
         android:layout_gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
@@ -48,24 +50,28 @@
         android:gravity="center"
         />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shareRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="0dp"
+        android:layout_weight="13"
         />
-
-
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/upload_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="업로드 하기"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.995"
-        tools:layout_editor_absoluteX="0dp"
-        />
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="1"
+        android:text="업로드 하기" />
+
+
+
+
+
+
 
 
 
