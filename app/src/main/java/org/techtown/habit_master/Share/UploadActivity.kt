@@ -144,11 +144,9 @@ class UploadActivity : AppCompatActivity() {
                 Log.e(TAG,"성공하였습니다.")
 
             }//성공시
-                .addOnFailureListener{
-
-                    Log.e(TAG,"실패하였습니다.")
-
-                }
+            .addOnFailureListener{
+                Log.e(TAG,"실패하였습니다.")
+            }
 
         }
 

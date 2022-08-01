@@ -1,9 +1,11 @@
 package org.techtown.habit_master.Share
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -88,6 +90,8 @@ class ShareActivity : AppCompatActivity() {
             }
 
         }
+
+
 
         //ViewCreated
         val rowCalendarChangesObserver = object: CalendarChangesObserver {

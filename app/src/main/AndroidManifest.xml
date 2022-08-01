@@ -6,10 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />    <!--파일 쓰기 권한 -->
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>  <!-- 카메라 기능 사용 -->
-
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 파일 쓰기 권한 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" /> <!-- 카메라 기능 사용 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Habit_Master"
         tools:ignore="MissingClass">
+        <activity
+            android:name=".SocialFragment.NicknameActivity"
+            android:exported="false" />
         <activity
             android:name=".Share.UploadActivity"
             android:exported="false" />
@@ -62,17 +66,14 @@
         </activity>
 
         <provider
-            android:authorities="org.techtown.habit_master.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="org.techtown.habit_master.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-
         </provider>
-
-
     </application>
 
 </manifest>

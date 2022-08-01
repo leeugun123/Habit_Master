@@ -1,21 +1,32 @@
 package org.techtown.habit_master
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
+import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.Toast
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
+import org.techtown.habit_master.SocialFragment.NicknameActivity
 import org.techtown.habit_master.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val database = Firebase.database//파이어베이스 연동
+    private var uid : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -36,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 //Toast.makeText(this, "카카오 로그인 실패", Toast.LENGTH_SHORT).show()
             } else if (tokenInfo != null) {
                 Toast.makeText(this, "카카오 로그인", Toast.LENGTH_SHORT).show()
-                go_nextActivity()
+                CheckUid()
             }
         }
 
@@ -76,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 }
             } else if (token != null) {
                 Toast.makeText(this, "카카오 로그인", Toast.LENGTH_SHORT).show()
-                go_nextActivity()
+                CheckUid()
             }
         }
 
@@ -102,10 +113,53 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun go_nextActivity(){
+    fun CheckUid(){
 
-        val intent = Intent(this, BottomActivity::class.java)
-        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+        UserApiClient.instance.me { user, error ->
+
+            if (error != null) {
+                //Log.e(TAG, "사용자 정보 요청 실패", error)
+            } else if (user != null) {
+                uid = user.id.toString()
+            }
+
+            database.reference.child("Users").addValueEventListener(object : ValueEventListener{
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    if(snapshot.child(uid.toString()).exists()){
+                        goBottomActivity()
+                    }//존재한다면 안 만들어도 됨
+                    else{
+                        goMakeActivity()
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+
+                }
+
+            })
+
+
+
+        }
+
+    }
+
+    private fun goBottomActivity() {
+        var intent : Intent
+        intent = Intent(this, BottomActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun goMakeActivity() {
+        var intent : Intent
+        intent = Intent(this, NicknameActivity::class.java)
+        startActivity(intent)
         finish()
     }
 
