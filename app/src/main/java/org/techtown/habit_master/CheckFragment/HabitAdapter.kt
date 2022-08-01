@@ -40,6 +40,7 @@ class HabitAdapter (private val items: ArrayList<org.techtown.habit_master.Routi
         holder.apply {
             this.bind(item)
             itemView.tag = item
+
         }
 
 

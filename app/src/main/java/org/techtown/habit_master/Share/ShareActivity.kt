@@ -1,9 +1,11 @@
 package org.techtown.habit_master.Share
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +16,28 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.michalsvec.singlerowcalendar.calendar.CalendarChangesObserver
+import com.michalsvec.singlerowcalendar.calendar.CalendarViewManager
+import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendar
+import com.michalsvec.singlerowcalendar.calendar.SingleRowCalendarAdapter
+import com.michalsvec.singlerowcalendar.selection.CalendarSelectionManager
+import com.michalsvec.singlerowcalendar.utils.DateUtils.getDates
+import com.michalsvec.singlerowcalendar.utils.DateUtils.getDayNumber
+import kotlinx.android.synthetic.main.activity_share.*
+import kotlinx.android.synthetic.main.item.view.*
+import kotlinx.android.synthetic.main.item_calendar_day_selected.view.*
+import org.techtown.habit_master.R
 import org.techtown.habit_master.databinding.ActivityShareBinding
 import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ShareActivity : AppCompatActivity() {
 
     private lateinit var mBinding : ActivityShareBinding
+
+    private val calendar = Calendar.getInstance()
+    private var currentMonth = 0
 
     private val shareList : ArrayList<Share> = ArrayList()
     lateinit var recyclerView: RecyclerView
@@ -37,13 +55,70 @@ class ShareActivity : AppCompatActivity() {
 
         var shareTitle = intent.getStringExtra("habitTitle")
 
-        mBinding.shareTitle.setText(shareTitle.toString())
+        mBinding.shareTitle.text = shareTitle.toString()
         //습관제목 붙이기
+
+
+        val rowCalendarManager = object : CalendarViewManager {
+
+            override fun setCalendarViewResourceId(position: Int, date: Date, isSelected: Boolean): Int {
+
+                val cal = Calendar.getInstance()
+                cal.time = date
+
+                return if(isSelected)
+                    when (cal[Calendar.DAY_OF_WEEK]){
+                        else -> R.layout.item_calendar_day_selected
+                    }
+                else
+                    when(cal[Calendar.DAY_OF_WEEK]){
+                        else -> R.layout.item_calendar_day_unselected
+                    }
+
+
+
+            }
+
+            override fun bindDataToCalendarView(holder: SingleRowCalendarAdapter.CalendarViewHolder, date: Date, position: Int, isSelected: Boolean) {
+
+                //holder.itemView.tv_day.text = getDayNumber(date)
+                holder.itemView.tag = getDayNumber(date)
+            }
+
+        }
+
+        //ViewCreated
+        val rowCalendarChangesObserver = object: CalendarChangesObserver {
+            @SuppressLint("SetTextI18n")
+            override fun whenSelectionChanged(isSelected: Boolean, position: Int, date: Date) {
+                super.whenSelectionChanged(isSelected, position, date)
+            }
+        }
+
+        val rowSelectionManager = object : CalendarSelectionManager {
+            override fun canBeItemSelected(position: Int, date: Date): Boolean {
+                return true
+            }
+        }
+
+
+        mBinding.rowCalendar.apply {
+
+            calendarViewManager = rowCalendarManager
+            calendarChangesObserver = rowCalendarChangesObserver
+            calendarSelectionManager = rowSelectionManager
+
+            this.setDates(getFutureDatesOfCurrentMonth())
+            this.init()
+
+        }
+
+
 
         val onlyDate : LocalDate = LocalDate.now()//오늘 날짜 가져오기
         val date : String = onlyDate.toString().replace("-","")
 
-        mBinding.date.setText(date)//오늘 날짜
+        mBinding.date.text = date//오늘 날짜
 
         shareHabits = shareHabits.child(shareTitle.toString()).child("date").child(date)
         //선택한 것 가져오기
@@ -56,12 +131,11 @@ class ShareActivity : AppCompatActivity() {
 
                 for(ds in snapshot.children){
 
-                    shareList.add(Share(ds.child("uid").getValue().toString(),
-                        ds.child("shareImg").getValue().toString(),
-                        ds.child("description").getValue().toString(),
+                    shareList.add(Share(ds.child("uid").value.toString(),
+                        ds.child("shareImg").value.toString(),
+                        ds.child("description").value.toString(),
                         true))
                     //파베로부터 데이터 가져오기
-
 
                 }
 
@@ -76,8 +150,10 @@ class ShareActivity : AppCompatActivity() {
 
             }
 
-
         })
+
+
+
 
 
         mBinding.uploadButton.setOnClickListener{
@@ -95,4 +171,31 @@ class ShareActivity : AppCompatActivity() {
 
 
     }
+
+    private fun getFutureDatesOfCurrentMonth(): List<Date> {
+        currentMonth = calendar[Calendar.MONTH]
+        return getDates(mutableListOf())
+    }
+
+    private fun getDates(list: MutableList<Date>): List<Date> {
+
+        calendar.set(Calendar.MONTH, currentMonth)
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        list.add(calendar.time)
+
+        while (currentMonth == calendar[Calendar.MONTH]) {
+
+            calendar.add(Calendar.DATE, +1)
+
+            if (calendar[Calendar.MONTH] == currentMonth)
+                list.add(calendar.time)
+
+        }
+
+        calendar.add(Calendar.DATE, -1)
+
+        return list
+    }
+
 }
+
