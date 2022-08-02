@@ -68,14 +68,15 @@ class ShareActivity : AppCompatActivity() {
                 return if(isSelected){
                     when (cal[Calendar.DAY_OF_WEEK]){
                         else -> R.layout.item_calendar_day_unselected
-                    }
+                    }//선택 했을 경우
 
                 }
 
                 else{
                     when(cal[Calendar.DAY_OF_WEEK]){
                         else -> R.layout.item_calendar_day_unselected
-                    }
+                    }//기본 상태
+
                 }
 
 
@@ -91,13 +92,19 @@ class ShareActivity : AppCompatActivity() {
 
         }
 
-
-
         //ViewCreated
         val rowCalendarChangesObserver = object: CalendarChangesObserver {
             @SuppressLint("SetTextI18n")
             override fun whenSelectionChanged(isSelected: Boolean, position: Int, date: Date) {
                 super.whenSelectionChanged(isSelected, position, date)
+
+                //Log.e(TAG,"========================================="+date.toString())
+
+                //Tue Aug 02 21:05:31 GMT+09:00 2022
+                //파싱 해야 함
+
+
+
             }
         }
 
