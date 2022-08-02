@@ -119,7 +119,6 @@ class ShareActivity : AppCompatActivity() {
                 //일
                 var touchDay = year+month+day
 
-
                 recycleUpdate(touchDay)
 
                 return true
@@ -175,7 +174,7 @@ class ShareActivity : AppCompatActivity() {
 
     private fun recycleUpdate(date : String) {
 
-        Log.e(TAG,"=========================== 리사이클러뷰 업데이트 ======================="+date)
+        //Log.e(TAG,"=========================== 리사이클러뷰 업데이트 ======================="+date)
 
         shareHabits = shareHabits.child(shareTitle.toString()).child("date").child(date)
         //선택한 것 가져오기
@@ -186,11 +185,8 @@ class ShareActivity : AppCompatActivity() {
 
                 shareList.clear()//데이터가 변경되었을때 다시 불러옴
 
-
                 for(ds in snapshot.children){
 
-
-                    Log.e(TAG,"여기까지는 들어온다.===============================================")
                     shareList.add(Share(ds.child("nickName").value.toString(),
                         ds.child("shareImg").value.toString(),
                         ds.child("description").value.toString(),
@@ -233,12 +229,12 @@ class ShareActivity : AppCompatActivity() {
 
             if (calendar[Calendar.MONTH] == currentMonth)
                 list.add(calendar.time)
-
         }
 
         calendar.add(Calendar.DATE, -1)
 
         return list
+
     }
 
 }
