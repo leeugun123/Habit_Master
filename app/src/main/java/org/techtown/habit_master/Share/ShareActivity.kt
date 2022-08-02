@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -44,6 +45,7 @@ class ShareActivity : AppCompatActivity() {
 
     private val database = Firebase.database//파이어베이스 연동
     var shareHabits = database.getReference("Habits")
+    private var shareTitle : String? = null
     //Habit 데이터 가져오기
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -53,7 +55,7 @@ class ShareActivity : AppCompatActivity() {
         mBinding = ActivityShareBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        var shareTitle = intent.getStringExtra("habitTitle")
+        shareTitle = intent.getStringExtra("habitTitle")
 
         mBinding.shareTitle.text = shareTitle.toString()
         //습관제목 붙이기
@@ -107,27 +109,26 @@ class ShareActivity : AppCompatActivity() {
             override fun canBeItemSelected(position: Int, date: Date): Boolean {
 
                 var str : String = date.toString()
-                //Tue Aug 02 21:05:31 GMT+09:00 2022
-                //파싱 해야 함
+                //Tue Aug 02 21:05:31 GMT+09:00 2022 , 파싱
 
                 var year = str.substring(str.length-4 until str.length)
                 //년
-
                 var month = calMonth(str.substring(4 until 7))
                 //달
-
                 var day = str.substring(8 until 10)
                 //일
-
                 var touchDay = year+month+day
 
-                Log.e(TAG,"========================================="+touchDay)
 
+                recycleUpdate(touchDay)
 
                 return true
+
             }
 
             private fun calMonth(month: String): String {
+
+                //월을 추가적으로 구현해야 함
 
                 if(month == "Aug"){
                     return "08"
@@ -137,8 +138,6 @@ class ShareActivity : AppCompatActivity() {
             }
 
         }
-
-
 
         mBinding.rowCalendar.apply {
 
@@ -151,12 +150,32 @@ class ShareActivity : AppCompatActivity() {
 
         }
 
-
-
         val onlyDate : LocalDate = LocalDate.now()//오늘 날짜 가져오기
         val date : String = onlyDate.toString().replace("-","")
 
         mBinding.date.text = date//오늘 날짜
+
+        recycleUpdate(date)//recyclerview 업데이트
+
+        mBinding.uploadButton.setOnClickListener{
+
+            val intent = Intent(this, UploadActivity::class.java)
+            intent.putExtra("habitTitle",shareTitle.toString())
+            intent.putExtra("habitDate",date)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            //finish() 지금 액티비티 그대로 유지하기
+
+
+        }//이미지 저장하기
+
+
+
+    }
+
+    private fun recycleUpdate(date : String) {
+
+        Log.e(TAG,"=========================== 리사이클러뷰 업데이트 ======================="+date)
 
         shareHabits = shareHabits.child(shareTitle.toString()).child("date").child(date)
         //선택한 것 가져오기
@@ -167,8 +186,11 @@ class ShareActivity : AppCompatActivity() {
 
                 shareList.clear()//데이터가 변경되었을때 다시 불러옴
 
+
                 for(ds in snapshot.children){
 
+
+                    Log.e(TAG,"여기까지는 들어온다.===============================================")
                     shareList.add(Share(ds.child("nickName").value.toString(),
                         ds.child("shareImg").value.toString(),
                         ds.child("description").value.toString(),
@@ -189,22 +211,6 @@ class ShareActivity : AppCompatActivity() {
             }
 
         })
-
-
-
-
-
-        mBinding.uploadButton.setOnClickListener{
-
-            val intent = Intent(this, UploadActivity::class.java)
-            intent.putExtra("habitTitle",shareTitle.toString())
-            intent.putExtra("habitDate",date)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            //finish() 지금 액티비티 그대로 유지하기
-
-
-        }//이미지 저장하기
 
 
 
