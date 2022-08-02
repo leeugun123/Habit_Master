@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="50dp"
     android:layout_height="50dp"
-    android:background="#FFCDD2">
+    android:background="#FFCDD2"
+    android:layout_margin="10dp">
 
     <TextView
         android:id="@+id/unselected_date"

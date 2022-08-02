@@ -97,22 +97,47 @@ class ShareActivity : AppCompatActivity() {
             @SuppressLint("SetTextI18n")
             override fun whenSelectionChanged(isSelected: Boolean, position: Int, date: Date) {
                 super.whenSelectionChanged(isSelected, position, date)
-
-                //Log.e(TAG,"========================================="+date.toString())
-
-                //Tue Aug 02 21:05:31 GMT+09:00 2022
-                //파싱 해야 함
-
-
-
             }
+
+
         }
 
         val rowSelectionManager = object : CalendarSelectionManager {
+
             override fun canBeItemSelected(position: Int, date: Date): Boolean {
+
+                var str : String = date.toString()
+                //Tue Aug 02 21:05:31 GMT+09:00 2022
+                //파싱 해야 함
+
+                var year = str.substring(str.length-4 until str.length)
+                //년
+
+                var month = calMonth(str.substring(4 until 7))
+                //달
+
+                var day = str.substring(8 until 10)
+                //일
+
+                var touchDay = year+month+day
+
+                Log.e(TAG,"========================================="+touchDay)
+
+
                 return true
             }
+
+            private fun calMonth(month: String): String {
+
+                if(month == "Aug"){
+                    return "08"
+                }
+                else return "03"
+
+            }
+
         }
+
 
 
         mBinding.rowCalendar.apply {
