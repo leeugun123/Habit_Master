@@ -89,7 +89,6 @@ class ShareActivity : AppCompatActivity() {
                 holder.itemView.unselected_date.text = getDayNumber(date)
                 holder.itemView.unselected_day.text = getDay3LettersName(date)
 
-
             }
 
         }
@@ -163,18 +162,13 @@ class ShareActivity : AppCompatActivity() {
             intent.putExtra("habitDate",date)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
-            //finish() 지금 액티비티 그대로 유지하기
-
+            //지금 액티비티 그대로 유지하기
 
         }//이미지 저장하기
-
-
 
     }
 
     private fun recycleUpdate(date : String) {
-
-        //Log.e(TAG,"=========================== 리사이클러뷰 업데이트 ======================="+date)
 
         shareHabits = shareHabits.child(shareTitle.toString()).child("date").child(date)
         //선택한 것 가져오기
@@ -185,13 +179,16 @@ class ShareActivity : AppCompatActivity() {
 
                 shareList.clear()//데이터가 변경되었을때 다시 불러옴
 
+                //뷰 터치시 여기까지는 들어옴
+
                 for(ds in snapshot.children){
 
                     shareList.add(Share(ds.child("nickName").value.toString(),
                         ds.child("shareImg").value.toString(),
                         ds.child("description").value.toString(),
                         true))
-                    //파베로부터 데이터 가져오기
+                    //파베로부터 데이터 가져오기\
+
 
                 }
 
