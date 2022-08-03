@@ -1,5 +1,6 @@
 package org.techtown.habit_master
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -116,14 +117,16 @@ class MainActivity : AppCompatActivity() {
                 uid = user.id.toString()
             }
 
-            database.reference.child("Users").addValueEventListener(object : ValueEventListener{
+            database.reference.child("Users").addListenerForSingleValueEvent(object : ValueEventListener{
 
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     if(snapshot.child(uid.toString()).exists()){
+                        Log.e(TAG,"바텀으로 갑니다.======================================")
                         goBottomActivity()
                     }//존재한다면 안 만들어도 됨
                     else{
+                        Log.e(TAG,"닉네임 정하러 갑니다.======================================")
                         goMakeActivity()
                     }
 
