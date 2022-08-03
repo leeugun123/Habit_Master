@@ -185,6 +185,7 @@ class ShareActivity : AppCompatActivity() {
 
                     shareList.add(Share(ds.child("nickName").value.toString(),
                         ds.child("shareImg").value.toString(),
+                        ds.child("carTime").value.toString(),
                         ds.child("description").value.toString(),
                         true))
                     //파베로부터 데이터 가져오기\

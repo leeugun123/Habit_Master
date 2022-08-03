@@ -51,6 +51,8 @@ class UploadActivity : AppCompatActivity() {
     var uid : String? = null
     //카카오 uid
 
+    var carTime : String? = null
+
     var habitTitle : String? = null
     var habitDate : String? = null
     //이전 intent에서 Title 가져오기
@@ -162,7 +164,7 @@ class UploadActivity : AppCompatActivity() {
             val storageRef = storage.getReferenceFromUrl("gs://habitcertify.appspot.com")
             storageRef.child("images/" + filename).downloadUrl.addOnSuccessListener {
 
-                var share = Share(nickName.toString(),it.toString(),mBinding.description.text.toString(),true)
+                var share = Share(nickName.toString(),it.toString(),carTime.toString(),mBinding.description.text.toString(),true)
 
                 //Share 클래스 자체로 서버로 업로드한다.
 
@@ -222,9 +224,9 @@ class UploadActivity : AppCompatActivity() {
         timeDenote = timeDenote.substring(2 until timeDenote.length)
         //yyMMddhhmm
 
-        var time : String = timeDenote.substring(0 until 2) +"년 "+timeDenote.substring(2 until 4) + "월 " + timeDenote.substring(4 until 6) + "일 " + timeDenote.substring(6 until 8)+"시 " + timeDenote.substring(8 until 10) +"분"
+        carTime = timeDenote.substring(0 until 2) +"년 "+timeDenote.substring(2 until 4) + "월 " + timeDenote.substring(4 until 6) + "일 " + timeDenote.substring(6 until 8)+"시 " + timeDenote.substring(8 until 10) +"분"
 
-        mBinding.timeStamp.setText(time)
+        mBinding.timeStamp.setText(carTime)
         //찍힌 시간 나오게 하기
 
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)

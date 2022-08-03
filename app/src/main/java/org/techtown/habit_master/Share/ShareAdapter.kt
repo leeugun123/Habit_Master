@@ -44,6 +44,9 @@ class ShareAdapter(private val items: ArrayList<Share>, val context : Context): 
                 .into(binding.habitPic)
             //사진 붙이기
 
+            binding.timeStamp.text = item.carTime
+            //카메라 찍은 시간
+
             binding.description.setText(item.description)
             //부가 설명 추가
 
