@@ -51,9 +51,6 @@ class UploadActivity : AppCompatActivity() {
     var uid : String? = null
     //카카오 uid
 
-    var nickName: String? = null
-    //닉네임
-
     var habitTitle : String? = null
     var habitDate : String? = null
     //이전 intent에서 Title 가져오기
@@ -96,6 +93,9 @@ class UploadActivity : AppCompatActivity() {
 
             val formatter = SimpleDateFormat("yyyyMMHH_mmss")
             val now = Date()
+
+
+
             val filename : String = formatter.format(now) + ".png"
             //파일 이름 만들기
 
@@ -217,7 +217,12 @@ class UploadActivity : AppCompatActivity() {
         val timestamp : String = SimpleDateFormat("yyyyMMddhhmmss").format(Date())
         //시간마다 파일을 다르게함
 
+        val timeDenote : String = timestamp
+        //문자열 파싱
 
+
+        mBinding.timeStamp.setText(timeDenote)
+        //찍힌 시간 나오게 하기
 
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         //?은 nullable 이 변수를 null을 허락해줌

@@ -16,23 +16,48 @@
             android:id="@+id/take_picture"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/carmera_pic"
-            />
+            android:drawableLeft="@drawable/carmera_pic" />
 
-        <ImageView
-            android:id="@+id/upload_Img"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:scaleType="centerCrop"
-            />
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/upload_Img"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/timeStamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="찍힌시간"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                tools:ignore="MissingConstraints" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="오늘의 느낌 및 각오"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
 
 
     </LinearLayout>
