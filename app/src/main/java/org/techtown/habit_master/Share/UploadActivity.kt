@@ -217,11 +217,14 @@ class UploadActivity : AppCompatActivity() {
         val timestamp : String = SimpleDateFormat("yyyyMMddhhmmss").format(Date())
         //시간마다 파일을 다르게함
 
-        val timeDenote : String = timestamp
+        var timeDenote : String = SimpleDateFormat("yyyyMMddhhmm").format(Date())
         //문자열 파싱
+        timeDenote = timeDenote.substring(2 until timeDenote.length)
+        //yyMMddhhmm
 
+        var time : String = timeDenote.substring(0 until 2) +"년 "+timeDenote.substring(2 until 4) + "월 " + timeDenote.substring(4 until 6) + "일 " + timeDenote.substring(6 until 8)+"시 " + timeDenote.substring(8 until 10) +"분"
 
-        mBinding.timeStamp.setText(timeDenote)
+        mBinding.timeStamp.setText(time)
         //찍힌 시간 나오게 하기
 
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
