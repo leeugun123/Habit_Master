@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/drawable/round_button.xml" value="0.1" />
         <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_bottom.xml" value="0.264" />
         <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_habit.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_kind.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
-        <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_nickname.xml" value="0.4" />
+        <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_nickname.xml" value="0.264" />
         <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_share.xml" value="0.26582278481012656" />
         <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_splash.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/ReasonG/AndroidStudioProjects/Habit_Master/app/src/main/res/layout/activity_upload.xml" value="0.264" />

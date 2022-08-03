@@ -4,23 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SocialFragment.NicknameActivity">
-
+    tools:context=".NicknameActivity">
 
     <TextView
-        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:background="#1E88E5"
+        android:gravity="center"
         android:text="닉네임 정하기"
-        android:textSize="25sp"
+        android:textSize="40sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="40dp"
         android:textStyle="bold" />
+
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
+        android:layout_centerVertical="true"
         android:ems="10"
         android:hint="닉네임 입력"
         android:inputType="textPersonName"
@@ -29,9 +31,9 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/completeButton"
         android:layout_toRightOf="@+id/editText"
-        android:layout_below="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="완료"
         android:textStyle="bold" />
 

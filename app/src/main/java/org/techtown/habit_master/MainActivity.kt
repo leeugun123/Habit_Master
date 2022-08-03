@@ -1,9 +1,6 @@
 package org.techtown.habit_master
 
-import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.Color
-import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +16,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
-import org.techtown.habit_master.SocialFragment.NicknameActivity
 import org.techtown.habit_master.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

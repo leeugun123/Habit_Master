@@ -1,14 +1,10 @@
-package org.techtown.habit_master.SocialFragment
+package org.techtown.habit_master
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.user.UserApiClient
-import org.techtown.habit_master.BottomActivity
-import org.techtown.habit_master.R
 import org.techtown.habit_master.databinding.ActivityNicknameBinding
 
 class NicknameActivity : AppCompatActivity() {
