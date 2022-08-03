@@ -36,7 +36,7 @@ class NicknameActivity : AppCompatActivity() {
                     .child("nickName").setValue(nickname)
 
                 var intent : Intent
-                intent = Intent(this, BottomActivity::class.java)
+                intent = Intent(this, KindActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
