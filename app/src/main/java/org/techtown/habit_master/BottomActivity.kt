@@ -16,8 +16,6 @@ class BottomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityBottomBinding.inflate(layoutInflater)
 
-
-
         setContentView(mBinding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host) as NavHostFragment
